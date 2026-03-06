@@ -18,6 +18,7 @@
 
 #include "editor/toolkit/brush.hpp"
 #include "editor/editor_common.hpp"
+#include "editor/action/action_base.hpp"
 #include "editor/map/editor_map.hpp"
 #include "editor/map/map_fragment.hpp"
 #include "config.hpp"
@@ -339,7 +340,8 @@ BOOST_AUTO_TEST_CASE(test_terrain_code_none_terrain)
 	t_translation::terrain_code none = t_translation::NONE_TERRAIN;
 
 	// NONE_TERRAIN should have specific characteristics
-	BOOST_CHECK(none.base == t_translation::VOID_TERRAIN || true); // Just check it exists
+	// Just verify we can create and access it
+	BOOST_CHECK(none.base >= 0);
 }
 
 BOOST_AUTO_TEST_CASE(test_terrain_code_equality)

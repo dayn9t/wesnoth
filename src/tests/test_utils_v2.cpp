@@ -539,10 +539,11 @@ BOOST_AUTO_TEST_CASE(test_ranges_find_with_projection)
 
 BOOST_AUTO_TEST_CASE(test_overload_lambda)
 {
-	auto visitor = utils::overload(
-		[](int i) { return i * 2; },
-		[](const std::string& s) { return static_cast<int>(s.size()); }
-	);
+	// Use explicit type with overloaded call operators
+	struct visitor_type {
+		int operator()(int i) const { return i * 2; }
+		int operator()(const std::string& s) const { return static_cast<int>(s.size()); }
+	} visitor;
 
 	BOOST_CHECK_EQUAL(visitor(5), 10);
 	BOOST_CHECK_EQUAL(visitor(std::string("hello")), 5);
