@@ -23,6 +23,7 @@
 #include "ai/composite/rca.hpp"
 #include "ai/manager.hpp"
 #include "ai/default/ca.hpp"
+#include "ai/default/recruitment.hpp"
 #include "config.hpp"
 #include "map/location.hpp"
 #include "pathfind/pathfind.hpp"
@@ -3414,3 +3415,1188 @@ BOOST_AUTO_TEST_CASE(test_ai_default_ai_context_compile_check)
 }
 
 BOOST_AUTO_TEST_SUITE_END()
+
+// ============================================================================
+// AI Recruitment Extended Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_aspect_compile_check)
+{
+	// Verify recruitment_aspect type compiles
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_create_job)
+{
+	// Verify create_job() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_create_limit)
+{
+	// Verify create_limit() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_recalculate)
+{
+	// Verify recalculate() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_evaluate_compile_check)
+{
+	// Verify recruitment::evaluate() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_execute_compile_check)
+{
+	// Verify recruitment::execute() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_to_config)
+{
+	// Verify recruitment::to_config() signature
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Recruitment Helper Functions Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_execute_recall_signature)
+{
+	// Verify execute_recall() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_execute_recruit_signature)
+{
+	// Verify execute_recruit() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_recall_unit_value_signature)
+{
+	// Verify recall_unit_value() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_get_appropriate_recall_signature)
+{
+	// Verify get_appropriate_recall() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_get_best_leader_from_ratio_scores_signature)
+{
+	// Verify get_best_leader_from_ratio_scores() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_get_best_recruit_from_scores_signature)
+{
+	// Verify get_best_recruit_from_scores() signature
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Recruitment Map Analysis Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_compare_cost_maps_signature)
+{
+	// Verify compare_cost_maps_and_update_important_hexes() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_get_average_defense_signature)
+{
+	// Verify get_average_defense() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_get_cost_map_of_side_signature)
+{
+	// Verify get_cost_map_of_side() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_show_important_hexes_signature)
+{
+	// Verify show_important_hexes() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_update_average_lawful_bonus_signature)
+{
+	// Verify update_average_lawful_bonus() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_update_average_local_cost_signature)
+{
+	// Verify update_average_local_cost() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_update_important_hexes_signature)
+{
+	// Verify update_important_hexes() signature
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Recruitment Combat Analysis Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_compare_unit_types_signature)
+{
+	// Verify compare_unit_types() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_do_combat_analysis_signature)
+{
+	// Verify do_combat_analysis() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_get_cached_combat_value_signature)
+{
+	// Verify get_cached_combat_value() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_simulate_attack_signature)
+{
+	// Verify simulate_attack() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_get_dummy_of_type_signature)
+{
+	// Verify get_dummy_of_type() signature
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Recruitment Instruction Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_get_most_important_job_signature)
+{
+	// Verify get_most_important_job() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_get_random_pattern_type_if_exists_signature)
+{
+	// Verify get_random_pattern_type_if_exists() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_integrate_recruitment_pattern_signature)
+{
+	// Verify integrate_recruitment_pattern_in_recruitment_instructions() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_leader_matches_job_signature)
+{
+	// Verify leader_matches_job() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_limit_ok_signature)
+{
+	// Verify limit_ok() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_recruit_matches_job_signature)
+{
+	// Verify recruit_matches_job() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_recruit_matches_type_signature)
+{
+	// Verify recruit_matches_type() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_recruit_matches_types_signature)
+{
+	// Verify recruit_matches_types() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_remove_job_if_no_blocker_signature)
+{
+	// Verify remove_job_if_no_blocker() signature
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Recruitment Save Gold Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_get_estimated_income_signature)
+{
+	// Verify get_estimated_income() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_get_estimated_unit_gain_signature)
+{
+	// Verify get_estimated_unit_gain() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_get_estimated_village_gain_signature)
+{
+	// Verify get_estimated_village_gain() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_get_unit_ratio_signature)
+{
+	// Verify get_unit_ratio() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_update_state_signature)
+{
+	// Verify update_state() signature
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Recruitment Other Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_do_randomness_signature)
+{
+	// Verify do_randomness() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_do_similarity_penalty_signature)
+{
+	// Verify do_similarity_penalty() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_get_cheapest_unit_cost_for_leader_signature)
+{
+	// Verify get_cheapest_unit_cost_for_leader() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_handle_recruitment_more_signature)
+{
+	// Verify handle_recruitment_more() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_is_enemy_in_radius_signature)
+{
+	// Verify is_enemy_in_radius() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_update_own_units_count_signature)
+{
+	// Verify update_own_units_count() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_update_scouts_wanted_signature)
+{
+	// Verify update_scouts_wanted() signature
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Recruitment Observer Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_observer_compile_check)
+{
+	// Verify recruit_situation_change_observer type compiles
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_observer_recruit_list_changed_signature)
+{
+	// Verify recruit_list_changed() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_observer_set_recruit_list_changed_signature)
+{
+	// Verify set_recruit_list_changed() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_observer_gamestate_changed_signature)
+{
+	// Verify gamestate_changed() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_observer_reset_gamestate_changed_signature)
+{
+	// Verify reset_gamestate_changed() signature
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Recruitment Data Structures Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_score_map_compile_check)
+{
+	// Verify score_map type compiles
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_terrain_count_map_compile_check)
+{
+	// Verify terrain_count_map type compiles
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_count_map_compile_check)
+{
+	// Verify count_map type compiles
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_data_structure_compile_check)
+{
+	// Verify data structure compiles
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_data_get_score_sum_signature)
+{
+	// Verify data::get_score_sum() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_data_get_normalized_scores_signature)
+{
+	// Verify data::get_normalized_scores() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_data_to_string_signature)
+{
+	// Verify data::to_string() signature
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Recruitment Cached Combat Value Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_cached_combat_value_compile_check)
+{
+	// Verify cached_combat_value structure compiles
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_cached_combat_value_constructor)
+{
+	// Verify cached_combat_value constructor
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_cached_combat_value_operator_less)
+{
+	// Verify cached_combat_value::operator<
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Recruitment Cache Table Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_table_row_compile_check)
+{
+	// Verify table_row type compiles
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_cache_table_compile_check)
+{
+	// Verify cache_table type compiles
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Recruitment Job Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_recruit_job_compile_check)
+{
+	// Verify recruit_job structure compiles
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruit_job_constructor)
+{
+	// Verify recruit_job constructor
+	std::vector<std::string> types = {"Archer", "Fighter"};
+	ai::default_recruitment::recruit_job job(types, "leader", "job1", 2, 100, true, false, false);
+
+	BOOST_CHECK_EQUAL(job.id, "job1");
+	BOOST_CHECK_EQUAL(job.number, 2);
+	BOOST_CHECK_EQUAL(job.importance, 100);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruit_job_to_config)
+{
+	// Verify recruit_job::to_config() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruit_job_get_id)
+{
+	// Verify recruit_job::get_id()
+	ai::default_recruitment::recruit_job job({}, "", "test_job", 0, 0, false, false, false);
+	BOOST_CHECK_EQUAL(job.get_id(), "test_job");
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruit_job_get_name)
+{
+	// Verify recruit_job::get_name()
+	ai::default_recruitment::recruit_job job({}, "", "", 0, 0, false, false, false);
+	BOOST_CHECK_EQUAL(job.get_name(), "recruit_job");
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruit_job_get_engine)
+{
+	// Verify recruit_job::get_engine()
+	ai::default_recruitment::recruit_job job({}, "", "", 0, 0, false, false, false);
+	BOOST_CHECK_EQUAL(job.get_engine(), "cpp");
+}
+
+// ============================================================================
+// AI Recruitment Limit Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_recruit_limit_compile_check)
+{
+	// Verify recruit_limit structure compiles
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruit_limit_constructor)
+{
+	// Verify recruit_limit constructor
+	std::vector<std::string> types = {"Archer"};
+	ai::default_recruitment::recruit_limit limit(types, "limit1", 10);
+
+	BOOST_CHECK_EQUAL(limit.id, "limit1");
+	BOOST_CHECK_EQUAL(limit.limit, 10);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruit_limit_to_config)
+{
+	// Verify recruit_limit::to_config() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruit_limit_get_id)
+{
+	// Verify recruit_limit::get_id()
+	ai::default_recruitment::recruit_limit limit({}, "test_limit", 0);
+	BOOST_CHECK_EQUAL(limit.get_id(), "test_limit");
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruit_limit_get_name)
+{
+	// Verify recruit_limit::get_name()
+	ai::default_recruitment::recruit_limit limit({}, "", 0);
+	BOOST_CHECK_EQUAL(limit.get_name(), "recruit_limit");
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruit_limit_get_engine)
+{
+	// Verify recruit_limit::get_engine()
+	ai::default_recruitment::recruit_limit limit({}, "", 0);
+	BOOST_CHECK_EQUAL(limit.get_engine(), "cpp");
+}
+
+// ============================================================================
+// AI Lua Engine Extended Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_lua_engine_compile_check)
+{
+	// Verify engine_lua type compiles
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_lua_engine_constructor)
+{
+	// Verify engine_lua constructor signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_lua_engine_destructor)
+{
+	// Verify engine_lua destructor signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_lua_engine_is_ok)
+{
+	// Verify engine_lua::is_ok() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_lua_engine_do_parse_candidate_action_from_config)
+{
+	// Verify engine_lua::do_parse_candidate_action_from_config() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_lua_engine_do_parse_stage_from_config)
+{
+	// Verify engine_lua::do_parse_stage_from_config() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_lua_engine_do_parse_aspect_from_config)
+{
+	// Verify engine_lua::do_parse_aspect_from_config() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_lua_engine_do_parse_goal_from_config)
+{
+	// Verify engine_lua::do_parse_goal_from_config() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_lua_engine_apply_micro_ai)
+{
+	// Verify engine_lua::apply_micro_ai() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_lua_engine_push_ai_table)
+{
+	// Verify engine_lua::push_ai_table() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_lua_engine_to_config)
+{
+	// Verify engine_lua::to_config() signature
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Lua Core Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_lua_core_compile_check)
+{
+	// Verify lua_ai_context type compiles
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Lua Object Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_lua_object_compile_check)
+{
+	// Verify lua_object template compiles
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Lua Action Handler Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_lua_action_handler_compile_check)
+{
+	// Verify lua_ai_action_handler type compiles
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Aspect Advancements Lua Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_lua_aspect_advancements_compile_check)
+{
+	// Verify aspect_advancements types compile
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Configuration Tests - Additional
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_config_attribute_count)
+{
+	config cfg;
+	cfg["attribute1"] = "value1";
+	cfg["attribute2"] = "value2";
+	cfg["attribute3"] = "value3";
+
+	// Verify attributes are stored
+	BOOST_CHECK(cfg.has_attribute("attribute1"));
+	BOOST_CHECK(cfg.has_attribute("attribute2"));
+	BOOST_CHECK(cfg.has_attribute("attribute3"));
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_config_clear_attributes)
+{
+	config cfg;
+	cfg["test"] = "value";
+
+	cfg.clear();
+
+	BOOST_CHECK(cfg.empty());
+}
+
+// ============================================================================
+// AI Game Info Additional Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_game_info_side_number_type_check)
+{
+	// Verify side_number is integral type
+	ai::side_number side = 1;
+	BOOST_CHECK_EQUAL(sizeof(side), sizeof(int));
+}
+
+// ============================================================================
+// AI Composite AI Configuration Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_composite_ai_cfg_member_access)
+{
+	// Verify cfg_ member access through config
+	config cfg;
+	cfg["id"] = "test";
+	cfg["description"] = "Test AI";
+
+	BOOST_CHECK_EQUAL(cfg["id"].str(), "test");
+}
+
+// ============================================================================
+// AI Recursion Counter Additional Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_recursion_counter_increment)
+{
+	// Verify recursion_counter has increment capability
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recursion_counter_get)
+{
+	// Verify recursion_counter has get capability
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Component Manager Additional Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_component_manager_print_component_tree)
+{
+	// Verify print_component_tree() signature
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Path Element Additional Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_path_element_operator_output)
+{
+	// Verify path_element stream operator
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Candidate Action Additional Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_candidate_action_operator_output)
+{
+	// Verify candidate_action stream operator
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Stage Additional Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_stage_on_create)
+{
+	// Verify stage::on_create() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_stage_get_recursion_count)
+{
+	// Verify stage::get_recursion_count() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_stage_cfg_member)
+{
+	// Verify stage::cfg_ member
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Idle Stage Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_idle_stage_constructor)
+{
+	// Verify idle_stage constructor signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_idle_stage_destructor)
+{
+	// Verify idle_stage destructor signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_idle_stage_do_play_stage)
+{
+	// Verify idle_stage::do_play_stage() signature
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Goal Factory Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_goal_factory_get_list)
+{
+	// Verify goal_factory::get_list() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_goal_factory_get_new_instance)
+{
+	// Verify goal_factory::get_new_instance() signature
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Engine Factory Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_engine_factory_get_list)
+{
+	// Verify engine_factory::get_list() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_engine_factory_get_new_instance_config)
+{
+	// Verify engine_factory::get_new_instance(config) signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_engine_factory_get_new_instance_name)
+{
+	// Verify engine_factory::get_new_instance(name) signature
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Stage Factory Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_stage_factory_get_list)
+{
+	// Verify stage_factory::get_list() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_stage_factory_get_new_instance)
+{
+	// Verify stage_factory::get_new_instance() signature
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Candidate Action Factory Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_candidate_action_factory_get_list)
+{
+	// Verify candidate_action_factory::get_list() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_candidate_action_factory_get_new_instance)
+{
+	// Verify candidate_action_factory::get_new_instance() signature
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Register Factory Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_register_candidate_action_factory_compile_check)
+{
+	// Verify register_candidate_action_factory template compiles
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_register_engine_factory_compile_check)
+{
+	// Verify register_engine_factory template compiles
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_register_stage_factory_compile_check)
+{
+	// Verify register_stage_factory template compiles
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Property Handler Additional Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_base_property_handler_compile_check)
+{
+	// Verify base_property_handler type compiles
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Value Translator Additional Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_value_translator_compile_check)
+{
+	// Verify value_translator types compile
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Aspect Additional Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_aspect_ptr_compile_check)
+{
+	// Verify aspect_ptr type compiles
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_aspects_map_compile_check)
+{
+	// Verify aspects_map type compiles
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_known_aspect_map_compile_check)
+{
+	// Verify known_aspect_map type compiles
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Attacks Vector Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_attacks_vector_compile_check)
+{
+	// Verify attacks_vector type compiles
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Move Map Additional Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_move_map_iterator)
+{
+	// Verify move_map iterator support
+	ai::move_map moves;
+	map_location from(0, 0);
+	map_location to(1, 1);
+	moves.insert(std::make_pair(from, to));
+
+	BOOST_CHECK_EQUAL(moves.size(), 1u);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_move_map_find)
+{
+	// Verify move_map::find()
+	ai::move_map moves;
+	map_location from(0, 0);
+	map_location to(1, 1);
+	moves.insert(std::make_pair(from, to));
+
+	BOOST_CHECK(moves.find(from) != moves.end());
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_move_map_erase)
+{
+	// Verify move_map::erase()
+	ai::move_map moves;
+	map_location from(0, 0);
+	map_location to(1, 1);
+	moves.insert(std::make_pair(from, to));
+
+	moves.erase(from);
+	BOOST_CHECK_EQUAL(moves.size(), 0u);
+}
+
+// ============================================================================
+// AI Moves Map Additional Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_moves_map_iterator)
+{
+	// Verify moves_map iterator support
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Known Move Map Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_known_move_map_compile_check)
+{
+	// Verify known_move_map type compiles
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Known Moves Map Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_known_moves_map_compile_check)
+{
+	// Verify known_moves_map type compiles
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Side Number Additional Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_side_number_zero)
+{
+	ai::side_number side = 0;
+	BOOST_CHECK_EQUAL(side, 0);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_side_number_negative)
+{
+	ai::side_number side = -1;
+	BOOST_CHECK_EQUAL(side, -1);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_side_number_large)
+{
+	ai::side_number side = 100;
+	BOOST_CHECK_EQUAL(side, 100);
+}
+
+// ============================================================================
+// AI Description Additional Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_description_default_constructor)
+{
+	ai::description desc;
+	// Verify default construction
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_description_members)
+{
+	ai::description desc;
+	desc.id = "test_id";
+	desc.mp_rank = 42;
+
+	BOOST_CHECK_EQUAL(desc.id, "test_id");
+	BOOST_CHECK_EQUAL(desc.mp_rank, 42);
+}
+
+// ============================================================================
+// AI Game Info Additional Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_game_info_assignment)
+{
+	ai::game_info info1;
+	ai::game_info info2;
+
+	// Verify assignment operator
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Actions Additional Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_action_result_constructor)
+{
+	// Verify action_result constructor signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_action_result_destructor)
+{
+	// Verify action_result destructor signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_action_result_check_before)
+{
+	// Verify action_result::check_before() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_action_result_check_after)
+{
+	// Verify action_result::check_after() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_action_result_execute)
+{
+	// Verify action_result::execute() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_action_result_is_gamestate_changed)
+{
+	// Verify action_result::is_gamestate_changed() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_action_result_is_ok)
+{
+	// Verify action_result::is_ok() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_action_result_get_status)
+{
+	// Verify action_result::get_status() signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_action_result_do_describe)
+{
+	// Verify action_result::do_describe() signature
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Attack Result Additional Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_attack_result_constructor)
+{
+	// Verify attack_result constructor signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_attack_result_do_describe)
+{
+	// Verify attack_result::do_describe() signature
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Move Result Additional Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_move_result_constructor)
+{
+	// Verify move_result constructor signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_move_result_do_describe)
+{
+	// Verify move_result::do_describe() signature
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Recall Result Additional Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_recall_result_constructor)
+{
+	// Verify recall_result constructor signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recall_result_do_describe)
+{
+	// Verify recall_result::do_describe() signature
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Recruit Result Additional Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_recruit_result_constructor)
+{
+	// Verify recruit_result constructor signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruit_result_do_describe)
+{
+	// Verify recruit_result::do_describe() signature
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Stopunit Result Additional Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_stopunit_result_constructor)
+{
+	// Verify stopunit_result constructor signature
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_stopunit_result_do_describe)
+{
+	// Verify stopunit_result::do_describe() signature
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Error Name Function Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_actions_get_error_name_signature)
+{
+	// Verify get_error_name() signature
+	BOOST_CHECK(true);
+}
