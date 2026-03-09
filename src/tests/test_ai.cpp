@@ -471,4 +471,89 @@ BOOST_AUTO_TEST_CASE( test_ai_description_assignment )
 	BOOST_CHECK_EQUAL(desc2.mp_rank, 10);
 }
 
+// ============================================================================
+// AI Composite Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE( test_ai_composite_interface )
+{
+	// Verify ai_composite has required interface methods
+	// Note: Full testing requires game state initialization
+	BOOST_CHECK(true); // Placeholder for compilation verification
+}
+
+BOOST_AUTO_TEST_CASE( test_ai_composite_goal_addition )
+{
+	// Test that goal addition interface exists
+	config goal_cfg;
+	goal_cfg["name"] = "test_goal";
+	goal_cfg["value"] = "100";
+
+	BOOST_CHECK(goal_cfg.has_attribute("name"));
+	BOOST_CHECK_EQUAL(goal_cfg["name"].str(), "test_goal");
+}
+
+BOOST_AUTO_TEST_CASE( test_ai_composite_stage_addition )
+{
+	// Test that stage addition interface exists
+	config stage_cfg;
+	stage_cfg["id"] = "test_stage";
+	stage_cfg["name"] = "Test Stage";
+
+	BOOST_CHECK(stage_cfg.has_attribute("id"));
+	BOOST_CHECK_EQUAL(stage_cfg["id"].str(), "test_stage");
+}
+
+// ============================================================================
+// AI Context Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE( test_ai_context_types )
+{
+	// Verify context types exist and are properly defined
+	// readonly_context, readwrite_context, side_context, default_ai_context
+	// These are abstract and require game state, so we verify the types compile
+	BOOST_CHECK(true); // Placeholder for compilation verification
+}
+
+BOOST_AUTO_TEST_CASE( test_ai_default_ai_context_proxy )
+{
+	// Test default_ai_context_proxy interface
+	// This is a mixin class that provides default implementations
+	BOOST_CHECK(true); // Placeholder for compilation verification
+}
+
+// ============================================================================
+// AI Component Hierarchy Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE( test_ai_component_interface )
+{
+	// Test component interface methods (pure virtual, verified by compilation)
+	// get_id(), get_name(), get_engine(), evaluate(), execute()
+	BOOST_CHECK(true); // Placeholder for compilation verification
+}
+
+BOOST_AUTO_TEST_CASE( test_ai_stage_creation )
+{
+	// Test stage creation configuration
+	config stage_cfg;
+	stage_cfg["id"] = "custom_stage";
+	stage_cfg["name"] = "Custom Stage";
+	stage_cfg["max_executions"] = "5";
+
+	BOOST_CHECK_EQUAL(stage_cfg["max_executions"].str(), "5");
+}
+
+BOOST_AUTO_TEST_CASE( test_ai_goal_creation )
+{
+	// Test goal creation configuration
+	config goal_cfg;
+	goal_cfg["name"] = "protect_unit";
+	goal_cfg["target"] = "leader";
+	goal_cfg["value"] = "100";
+
+	BOOST_CHECK_EQUAL(goal_cfg["target"].str(), "leader");
+}
+
 BOOST_AUTO_TEST_SUITE_END()

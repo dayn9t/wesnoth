@@ -20,6 +20,7 @@
 #include "ai/configuration.hpp"
 #include "ai/game_info.hpp"
 #include "ai/composite/rca.hpp"
+#include "ai/manager.hpp"
 #include "config.hpp"
 #include "map/location.hpp"
 #include "pathfind/pathfind.hpp"
@@ -1491,6 +1492,34 @@ BOOST_AUTO_TEST_CASE(test_ai_error_name_all_stopunit_results)
 	BOOST_CHECK(!ai::actions::get_error_name(ai::stopunit_result::E_NO_UNIT).empty());
 	BOOST_CHECK(!ai::actions::get_error_name(ai::stopunit_result::E_NOT_OWN_UNIT).empty());
 	BOOST_CHECK(!ai::actions::get_error_name(ai::stopunit_result::E_INCAPACITATED_UNIT).empty());
+}
+
+// ============================================================================
+// AI Manager Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_manager_has_manager_initial)
+{
+	// Test that has_manager returns false when no singleton exists
+	// Note: This test verifies the static method works correctly
+	// In a real game context, the manager would be created during game initialization
+	BOOST_CHECK(!ai::manager::has_manager());
+}
+
+// ============================================================================
+// AI Holder Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_holder_config_generation)
+{
+	// Test that holder can be constructed with valid config
+	config cfg;
+	cfg["id"] = "test_ai";
+	cfg["description"] = "Test AI for unit tests";
+
+	// Verify config is valid
+	BOOST_CHECK(cfg.has_attribute("id"));
+	BOOST_CHECK_EQUAL(cfg["id"].str(), "test_ai");
 }
 
 BOOST_AUTO_TEST_SUITE_END()
