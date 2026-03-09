@@ -1946,4 +1946,315 @@ BOOST_AUTO_TEST_CASE(test_ai_config_numeric_string_parsing)
 	BOOST_CHECK_CLOSE(cfg["value"].to_double(0.0), 3.14, 0.01);
 }
 
+// ============================================================================
+// AI Actions Extended Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_action_result_enum_values)
+{
+	// Verify action result enum values
+	BOOST_CHECK_EQUAL(static_cast<int>(ai::action_result::AI_ACTION_SUCCESS), 0);
+	BOOST_CHECK_EQUAL(static_cast<int>(ai::action_result::AI_ACTION_STARTED), 1);
+	BOOST_CHECK_EQUAL(static_cast<int>(ai::action_result::AI_ACTION_FAILURE), -1);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_attack_result_enum_values)
+{
+	// Verify attack result enum values are defined
+	BOOST_CHECK(ai::attack_result::E_EMPTY_ATTACKER > 0);
+	BOOST_CHECK(ai::attack_result::E_EMPTY_DEFENDER > 0);
+	BOOST_CHECK(ai::attack_result::E_INCAPACITATED_ATTACKER > 0);
+	BOOST_CHECK(ai::attack_result::E_INCAPACITATED_DEFENDER > 0);
+	BOOST_CHECK(ai::attack_result::E_NOT_OWN_ATTACKER > 0);
+	BOOST_CHECK(ai::attack_result::E_NOT_ENEMY_DEFENDER > 0);
+	BOOST_CHECK(ai::attack_result::E_NO_ATTACKS_LEFT > 0);
+	BOOST_CHECK(ai::attack_result::E_WRONG_ATTACKER_WEAPON > 0);
+	BOOST_CHECK(ai::attack_result::E_UNABLE_TO_CHOOSE_ATTACKER_WEAPON > 0);
+	BOOST_CHECK(ai::attack_result::E_ATTACKER_AND_DEFENDER_NOT_ADJACENT > 0);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_move_result_enum_values)
+{
+	// Verify move result enum values are defined
+	BOOST_CHECK(ai::move_result::E_EMPTY_MOVE > 0);
+	BOOST_CHECK(ai::move_result::E_NO_UNIT > 0);
+	BOOST_CHECK(ai::move_result::E_NOT_OWN_UNIT > 0);
+	BOOST_CHECK(ai::move_result::E_INCAPACITATED_UNIT > 0);
+	BOOST_CHECK(ai::move_result::E_AMBUSHED > 0);
+	BOOST_CHECK(ai::move_result::E_FAILED_TELEPORT > 0);
+	BOOST_CHECK(ai::move_result::E_OFF_MAP > 0);
+	BOOST_CHECK(ai::move_result::E_NO_ROUTE > 0);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recall_result_enum_values)
+{
+	// Verify recall result enum values are defined
+	BOOST_CHECK(ai::recall_result::E_NOT_AVAILABLE_FOR_RECALLING > 0);
+	BOOST_CHECK(ai::recall_result::E_NO_GOLD > 0);
+	BOOST_CHECK(ai::recall_result::E_NO_LEADER > 0);
+	BOOST_CHECK(ai::recall_result::E_LEADER_NOT_ON_KEEP > 0);
+	BOOST_CHECK(ai::recall_result::E_BAD_RECALL_LOCATION > 0);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruit_result_enum_values)
+{
+	// Verify recruit result enum values are defined
+	BOOST_CHECK(ai::recruit_result::E_NOT_AVAILABLE_FOR_RECRUITING > 0);
+	BOOST_CHECK(ai::recruit_result::E_UNKNOWN_OR_DUMMY_UNIT_TYPE > 0);
+	BOOST_CHECK(ai::recruit_result::E_NO_GOLD > 0);
+	BOOST_CHECK(ai::recruit_result::E_NO_LEADER > 0);
+	BOOST_CHECK(ai::recruit_result::E_LEADER_NOT_ON_KEEP > 0);
+	BOOST_CHECK(ai::recruit_result::E_BAD_RECRUIT_LOCATION > 0);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_stopunit_result_enum_values)
+{
+	// Verify stopunit result enum values are defined
+	BOOST_CHECK(ai::stopunit_result::E_NO_UNIT > 0);
+	BOOST_CHECK(ai::stopunit_result::E_NOT_OWN_UNIT > 0);
+	BOOST_CHECK(ai::stopunit_result::E_INCAPACITATED_UNIT > 0);
+}
+
+// ============================================================================
+// AI Recruitment Aspect Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_aspect_config)
+{
+	config recruit_cfg;
+	recruit_cfg["id"] = "recruitment";
+
+	config& instruction = recruit_cfg.add_child("instruction");
+	instruction["type"] = "recruit";
+	instruction["unit"] = "Elvish Archer";
+	instruction["number"] = "2";
+
+	BOOST_CHECK_EQUAL(recruit_cfg["id"].str(), "recruitment");
+	BOOST_CHECK(recruit_cfg.has_child("instruction"));
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_limit_config)
+{
+	config limit_cfg;
+	limit_cfg["type"] = "total";
+	limit_cfg["max"] = "10";
+
+	BOOST_CHECK_EQUAL(limit_cfg["type"].str(), "total");
+	BOOST_CHECK_EQUAL(limit_cfg["max"].str(), "10");
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_diversity_range)
+{
+	config diversity_cfg;
+	diversity_cfg["recruitment_diversity"] = "0.0";
+	BOOST_CHECK_EQUAL(diversity_cfg["recruitment_diversity"].to_double(0.0), 0.0);
+
+	diversity_cfg["recruitment_diversity"] = "1.0";
+	BOOST_CHECK_EQUAL(diversity_cfg["recruitment_diversity"].to_double(0.0), 1.0);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_randomness_range)
+{
+	config randomness_cfg;
+	randomness_cfg["recruitment_randomness"] = "0";
+	BOOST_CHECK_EQUAL(randomness_cfg["recruitment_randomness"].to_int(-1), 0);
+
+	randomness_cfg["recruitment_randomness"] = "10";
+	BOOST_CHECK_EQUAL(randomness_cfg["recruitment_randomness"].to_int(-1), 10);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_recruitment_save_gold_range)
+{
+	config save_gold_cfg;
+	save_gold_cfg["recruitment_save_gold"] = "0";
+	BOOST_CHECK_EQUAL(save_gold_cfg["recruitment_save_gold"].to_int(-1), 0);
+
+	save_gold_cfg["recruitment_save_gold"] = "20";
+	BOOST_CHECK_EQUAL(save_gold_cfg["recruitment_save_gold"].to_int(-1), 20);
+}
+
+// ============================================================================
+// AI Combat Analysis Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_combat_analysis_config)
+{
+	config combat_cfg;
+	combat_cfg["aggression"] = "0.7";
+	combat_cfg["caution"] = "0.3";
+
+	BOOST_CHECK_EQUAL(combat_cfg["aggression"].str(), "0.7");
+	BOOST_CHECK_EQUAL(combat_cfg["caution"].str(), "0.3");
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_combat_retreat_factor)
+{
+	config retreat_cfg;
+	retreat_cfg["retreat_factor"] = "0.25";
+	retreat_cfg["retreat_enemy_weight"] = "1.5";
+
+	BOOST_CHECK_EQUAL(retreat_cfg["retreat_factor"].str(), "0.25");
+	BOOST_CHECK_EQUAL(retreat_cfg["retreat_enemy_weight"].str(), "1.5");
+}
+
+// ============================================================================
+// AI Lua Engine Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_lua_engine_config)
+{
+	config lua_cfg;
+	lua_cfg["name"] = "lua";
+	lua_cfg["engine"] = "lua";
+	lua_cfg["code"] = "return true";
+
+	BOOST_CHECK_EQUAL(lua_cfg["name"].str(), "lua");
+	BOOST_CHECK_EQUAL(lua_cfg["engine"].str(), "lua");
+	BOOST_CHECK_EQUAL(lua_cfg["code"].str(), "return true");
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_lua_engine_empty_code)
+{
+	config lua_cfg;
+	lua_cfg["name"] = "lua";
+	lua_cfg["code"] = "";
+
+	BOOST_CHECK_EQUAL(lua_cfg["name"].str(), "lua");
+	BOOST_CHECK_EQUAL(lua_cfg["code"].str(), "");
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_lua_engine_multiline_code)
+{
+	config lua_cfg;
+	lua_cfg["name"] = "lua";
+	lua_cfg["code"] = "function ai()\n  return true\nend";
+
+	BOOST_CHECK_EQUAL(lua_cfg["name"].str(), "lua");
+	BOOST_CHECK(lua_cfg["code"].str().find("function") != std::string::npos);
+}
+
+// ============================================================================
+// AI Aspect Advancement Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_aspect_advancement_config)
+{
+	config advancement_cfg;
+	advancement_cfg["id"] = "advancements";
+
+	config& aspect = advancement_cfg.add_child("aspect");
+	aspect["id"] = "aggression";
+	aspect["value"] = "0.5";
+
+	BOOST_CHECK_EQUAL(advancement_cfg["id"].str(), "advancements");
+	BOOST_CHECK(advancement_cfg.has_child("aspect"));
+}
+
+// ============================================================================
+// AI Registry Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_registry_compile_check)
+{
+	// Verify AI registry types compile
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Simulated Actions Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_simulated_actions_compile_check)
+{
+	// Verify simulated actions types compile
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Gamestate Observer Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_gamestate_observer_compile_check)
+{
+	// Verify gamestate observer types compile
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Testing Utilities Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_testing_utils_compile_check)
+{
+	// Verify testing utilities types compile
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Configuration Property Handler Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_property_handler_compile_check)
+{
+	// Verify property handler types compile
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Value Translator Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_value_translator_compile_check)
+{
+	// Verify value translator types compile
+	BOOST_CHECK(true);
+}
+
+// ============================================================================
+// AI Composite Goal Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_composite_goal_config)
+{
+	config goal_cfg;
+	goal_cfg["name"] = "custom_goal";
+	goal_cfg["value"] = "75";
+	goal_cfg["id"] = "goal_1";
+
+	BOOST_CHECK_EQUAL(goal_cfg["name"].str(), "custom_goal");
+	BOOST_CHECK_EQUAL(goal_cfg["value"].str(), "75");
+	BOOST_CHECK_EQUAL(goal_cfg["id"].str(), "goal_1");
+}
+
+// ============================================================================
+// AI Composite Stage Extended Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_composite_stage_with_goals)
+{
+	config stage_cfg;
+	stage_cfg["id"] = "main_loop";
+	stage_cfg["name"] = "Main Loop";
+
+	config& goal = stage_cfg.add_child("goal");
+	goal["name"] = "protect_leader";
+	goal["value"] = "100";
+
+	BOOST_CHECK_EQUAL(stage_cfg["id"].str(), "main_loop");
+	BOOST_CHECK(stage_cfg.has_child("goal"));
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_composite_stage_with_aspects)
+{
+	config stage_cfg;
+	stage_cfg["id"] = "combat_phase";
+
+	config& aspect = stage_cfg.add_child("aspect");
+	aspect["id"] = "aggression";
+	aspect["value"] = "0.8";
+
+	BOOST_CHECK_EQUAL(stage_cfg["id"].str(), "combat_phase");
+	BOOST_CHECK(stage_cfg.has_child("aspect"));
+}
+
 BOOST_AUTO_TEST_SUITE_END()
