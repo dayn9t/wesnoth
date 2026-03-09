@@ -3414,8 +3414,6 @@ BOOST_AUTO_TEST_CASE(test_ai_default_ai_context_compile_check)
 	BOOST_CHECK(true);
 }
 
-BOOST_AUTO_TEST_SUITE_END()
-
 // ============================================================================
 // AI Recruitment Extended Tests
 // ============================================================================
@@ -4288,16 +4286,6 @@ BOOST_AUTO_TEST_CASE(test_ai_base_property_handler_compile_check)
 }
 
 // ============================================================================
-// AI Value Translator Additional Tests
-// ============================================================================
-
-BOOST_AUTO_TEST_CASE(test_ai_value_translator_compile_check)
-{
-	// Verify value_translator types compile
-	BOOST_CHECK(true);
-}
-
-// ============================================================================
 // AI Aspect Additional Tests
 // ============================================================================
 
@@ -4600,3 +4588,5 @@ BOOST_AUTO_TEST_CASE(test_ai_actions_get_error_name_signature)
 	// Verify get_error_name() signature
 	BOOST_CHECK(true);
 }
+
+BOOST_AUTO_TEST_SUITE_END()
