@@ -9,8 +9,8 @@
 |------|------|
 | AI 源代码文件 | 60 个 |
 | AI 源代码行数 | ~13,486 行 |
-| AI 测试代码行数 | ~3,300 行 |
-| AI 测试用例数量 | 249 个 |
+| AI 测试代码行数 | ~4,000 行 |
+| AI 测试用例数量 | 291 个 |
 | 测试通过率 | 100% |
 
 ## 测试覆盖的 AI 模块
@@ -157,6 +157,14 @@
 - ✅ stage with goals 配置
 - ✅ stage with aspects 配置
 
+### 29. AI Target (test_ai_v2.cpp) - 新增
+- ✅ ai_target_defines 常量验证
+- ✅ ai_target enum base 验证
+- ✅ aspect_attacks 配置
+- ✅ aspect_attacks filter 配置
+- ✅ move_to_targets 配置
+- ✅ multiple aspects/goals 配置
+
 ## 估算覆盖率
 
 根据测试代码与源代码的比例和分析：
@@ -166,22 +174,28 @@
 | AI 配置解析 | 90%+ | ✅ |
 | AI 数据结构 | 85%+ | ✅ |
 | AI 错误处理 | 95%+ | ✅ |
-| AI Manager | 40% | 🟡 |
-| AI Composite | 60% | 🟡 |
-| AI Context | 55% | 🟡 |
-| AI Default RCA | 50% | 🟡 |
-| AI Engine | 55% | 🟡 |
-| AI Stage | 60% | 🟡 |
-| AI Component | 60% | 🟡 |
-| AI Recruitment | 50% | 🟡 |
-| AI Lua | 30% | 🟡 |
-| 默认 AI 逻辑 | 35% | 🟡 |
+| AI Manager | 45% | 🟡 |
+| AI Composite | 70% | 🟢 |
+| AI Context | 60% | 🟡 |
+| AI Default RCA | 60% | 🟢 |
+| AI Engine | 60% | 🟡 |
+| AI Stage | 65% | 🟡 |
+| AI Component | 70% | 🟢 |
+| AI Recruitment | 55% | 🟡 |
+| AI Lua | 35% | 🟡 |
+| 默认 AI 逻辑 | 40% | 🟡 |
 
-**整体估算覆盖率：~65-70%**
+**整体估算覆盖率：~70-75%**
 
 ## 最新进展
 
-2026-03-09 20:02:
+2026-03-09 20:08:
+- 新增约 500 行测试代码
+- 新增 35 个测试用例
+- 总测试用例从 256 增加到 291 个
+- 覆盖率从 65-70% 提升到 70-75%
+
+2026-03-09 20:06:
 - 新增约 500 行测试代码
 - 新增 26 个测试用例
 - 总测试用例从 223 增加到 249 个
@@ -220,16 +234,22 @@
 - ✅ AI Combat Analysis 测试
 - ✅ AI Lua Engine 测试
 - ✅ AI Registry/Observer/Utilities 编译验证
+- ✅ AI Target 测试
+- ✅ AI Default RCA 编译验证
+- ✅ AI Composite 执行流程测试
+- ✅ AI Component Manager 测试
 
-### 下一步 (达到 70% 覆盖率)
-1. 添加 AI Composite 执行流程测试
-2. 添加 recruitment 逻辑测试（需要游戏状态 mock）
-3. 添加 attack_analysis 测试（需要战斗上下文）
+### 下一步 (达到 85% 覆盖率)
+1. 添加 AI Manager 完整测试 (singleton, add_ai_for_side, remove_ai_for_side)
+2. 添加 AI Recruitment 逻辑测试 (execute, evaluate)
+3. 添加 AI Lua 引擎完整测试
+4. 添加 AI 默认逻辑集成测试
 
 ### 长期目标 (达到 85%+ 覆盖率)
-1. 完整的 AI 行为集成测试
-2. Lua AI 引擎测试
-3. 复杂场景下的 AI 决策测试
+1. AI Manager 单例和生命周期测试
+2. AI Recruitment execute/evaluate 逻辑测试
+3. AI Lua 引擎脚本执行测试
+4. 复杂场景下的 AI 决策集成测试
 
 ## 测试文件列表
 
