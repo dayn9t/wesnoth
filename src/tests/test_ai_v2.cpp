@@ -19,8 +19,10 @@
 #include "ai/actions.hpp"
 #include "ai/configuration.hpp"
 #include "ai/game_info.hpp"
+#include "ai/composite/rca.hpp"
 #include "config.hpp"
 #include "map/location.hpp"
+#include "pathfind/pathfind.hpp"
 
 BOOST_AUTO_TEST_SUITE(ai_v2_suite)
 
@@ -1061,6 +1063,434 @@ BOOST_AUTO_TEST_CASE(test_ai_recruitment_instructions_total_limit)
 	limit["value"] = "10";
 
 	BOOST_CHECK(recruit_cfg.has_child("limit"));
+}
+
+// ============================================================================
+// AI Composite Component Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_path_element_default)
+{
+	ai::path_element elem;
+
+	BOOST_CHECK_EQUAL(elem.property, "");
+	BOOST_CHECK_EQUAL(elem.id, "");
+	BOOST_CHECK_EQUAL(elem.position, 0);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_path_element_assignment)
+{
+	ai::path_element elem;
+	elem.property = "test_property";
+	elem.id = "test_id";
+	elem.position = 5;
+
+	BOOST_CHECK_EQUAL(elem.property, "test_property");
+	BOOST_CHECK_EQUAL(elem.id, "test_id");
+	BOOST_CHECK_EQUAL(elem.position, 5);
+}
+
+// ============================================================================
+// AI Aspect Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_aspect_map_empty)
+{
+	ai::aspect_map aspects;
+
+	BOOST_CHECK(aspects.empty());
+	BOOST_CHECK_EQUAL(aspects.size(), 0u);
+}
+
+// ============================================================================
+// AI Result Type Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_result_type_size)
+{
+	// Verify result types are integral
+	BOOST_CHECK_EQUAL(sizeof(ai::side_number), sizeof(int));
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_move_map_default_construction)
+{
+	ai::move_map moves;
+
+	BOOST_CHECK(moves.empty());
+	BOOST_CHECK_EQUAL(moves.size(), 0u);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_move_map_single_move)
+{
+	ai::move_map moves;
+	map_location from(3, 4);
+	map_location to(5, 6);
+
+	moves.insert(std::make_pair(from, to));
+
+	BOOST_CHECK_EQUAL(moves.size(), 1u);
+	BOOST_CHECK_EQUAL(moves.count(from), 1u);
+	BOOST_CHECK_EQUAL(moves.begin()->second, to);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_move_map_multiple_same_source)
+{
+	ai::move_map moves;
+	map_location from(0, 0);
+	map_location to1(1, 0);
+	map_location to2(0, 1);
+	map_location to3(1, 1);
+
+	moves.insert(std::make_pair(from, to1));
+	moves.insert(std::make_pair(from, to2));
+	moves.insert(std::make_pair(from, to3));
+
+	// multimap allows multiple destinations from same source
+	BOOST_CHECK_EQUAL(moves.size(), 3u);
+	BOOST_CHECK_EQUAL(moves.count(from), 3u);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_moves_map_default_construction)
+{
+	ai::moves_map moves;
+
+	BOOST_CHECK(moves.empty());
+	BOOST_CHECK_EQUAL(moves.size(), 0u);
+}
+
+// ============================================================================
+// AI Configuration Edge Cases
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_config_empty_string_values)
+{
+	config ai_cfg;
+	ai_cfg["id"] = "";
+	ai_cfg["description"] = "";
+
+	BOOST_CHECK_EQUAL(ai_cfg["id"].str(), "");
+	BOOST_CHECK_EQUAL(ai_cfg["description"].str(), "");
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_config_numeric_zero_values)
+{
+	config ai_cfg;
+	ai_cfg["mp_rank"] = "0";
+	ai_cfg["value"] = "0";
+
+	BOOST_CHECK_EQUAL(ai_cfg["mp_rank"].to_int(-1), 0);
+	BOOST_CHECK_EQUAL(ai_cfg["value"].to_int(-1), 0);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_config_negative_values)
+{
+	config ai_cfg;
+	ai_cfg["leader_aggression"] = "-0.5";
+	ai_cfg["aggression"] = "-1.0";
+
+	BOOST_CHECK_EQUAL(ai_cfg["leader_aggression"].str(), "-0.5");
+	BOOST_CHECK_EQUAL(ai_cfg["aggression"].str(), "-1.0");
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_config_large_values)
+{
+	config ai_cfg;
+	ai_cfg["value"] = "999999";
+	ai_cfg["mp_rank"] = "1000000";
+
+	BOOST_CHECK_GT(ai_cfg["value"].to_int(0), 100000);
+	BOOST_CHECK_GT(ai_cfg["mp_rank"].to_int(0), 100000);
+}
+
+
+// ============================================================================
+// AI Goal Configuration Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_goal_target_unit_config)
+{
+	config ai_cfg;
+	config& goal = ai_cfg.add_child("target_unit");
+	goal["id"] = "leader";
+	goal["value"] = "100";
+
+	BOOST_CHECK(ai_cfg.has_child("target_unit"));
+	BOOST_CHECK_EQUAL(goal["id"].str(), "leader");
+	BOOST_CHECK_EQUAL(goal["value"].str(), "100");
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_goal_guard_config)
+{
+	config ai_cfg;
+	config& goal = ai_cfg.add_child("guard");
+	goal["id"] = "important_unit";
+	goal["value"] = "80";
+
+	BOOST_CHECK(ai_cfg.has_child("guard"));
+	BOOST_CHECK_EQUAL(goal["id"].str(), "important_unit");
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_goal_reach_owns_config)
+{
+	config ai_cfg;
+	config& goal = ai_cfg.add_child("reach_owns");
+	goal["id"] = "keep";
+	goal["value"] = "50";
+
+	BOOST_CHECK(ai_cfg.has_child("reach_owns"));
+	BOOST_CHECK_EQUAL(goal["id"].str(), "keep");
+}
+
+// ============================================================================
+// AI Stage Configuration Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_stage_main_loop_config)
+{
+	config ai_cfg;
+	config& stage = ai_cfg.add_child("stage");
+	stage["id"] = "main_loop";
+	stage["name"] = "ai_default_rca::standard_main_loop";
+
+	BOOST_CHECK(ai_cfg.has_child("stage"));
+	BOOST_CHECK_EQUAL(stage["id"].str(), "main_loop");
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_stage_custom_config)
+{
+	config ai_cfg;
+	config& stage = ai_cfg.add_child("stage");
+	stage["id"] = "custom_stage";
+	stage["name"] = "custom_stage_name";
+	stage["max_executions"] = "5";
+
+	BOOST_CHECK_EQUAL(stage["max_executions"].str(), "5");
+}
+
+// ============================================================================
+// AI Engine Configuration Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_engine_cpp_config)
+{
+	config ai_cfg;
+	config& engine = ai_cfg.add_child("engine");
+	engine["name"] = "cpp";
+	engine["id"] = "cpp_engine";
+
+	BOOST_CHECK_EQUAL(engine["name"].str(), "cpp");
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_engine_lua_config)
+{
+	config ai_cfg;
+	config& engine = ai_cfg.add_child("engine");
+	engine["name"] = "lua";
+	engine["id"] = "lua_engine";
+	engine["code"] = "return true";
+
+	BOOST_CHECK_EQUAL(engine["name"].str(), "lua");
+	BOOST_CHECK_EQUAL(engine["code"].str(), "return true");
+}
+
+// ============================================================================
+// AI Attack Result Additional Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_attack_result_error_wrong_attacker_weapon_detailed)
+{
+	const std::string& name = ai::actions::get_error_name(ai::attack_result::E_WRONG_ATTACKER_WEAPON);
+	BOOST_CHECK(name.find("WRONG_ATTACKER_WEAPON") != std::string::npos);
+}
+
+BOOST_AUTO_TEST_CASE(test_attack_result_error_unable_to_choose_attacker_weapon)
+{
+	const std::string& name = ai::actions::get_error_name(ai::attack_result::E_UNABLE_TO_CHOOSE_ATTACKER_WEAPON);
+	BOOST_CHECK_EQUAL(name, "attack_result::E_UNABLE_TO_CHOOSE_ATTACKER_WEAPON");
+}
+
+// ============================================================================
+// AI Move Result Additional Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_move_result_error_ambushed_detailed)
+{
+	const std::string& name = ai::actions::get_error_name(ai::move_result::E_AMBUSHED);
+	BOOST_CHECK(name.find("AMBUSHED") != std::string::npos);
+}
+
+BOOST_AUTO_TEST_CASE(test_move_result_error_failed_teleport_detailed)
+{
+	const std::string& name = ai::actions::get_error_name(ai::move_result::E_FAILED_TELEPORT);
+	BOOST_CHECK_EQUAL(name, "move_result::E_FAILED_TELEPORT");
+}
+
+// ============================================================================
+// AI Recall Result Additional Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_recall_result_error_not_available_detailed)
+{
+	const std::string& name = ai::actions::get_error_name(ai::recall_result::E_NOT_AVAILABLE_FOR_RECALLING);
+	BOOST_CHECK_EQUAL(name, "recall_result::E_NOT_AVAILABLE_FOR_RECALLING");
+}
+
+// ============================================================================
+// AI Recruit Result Additional Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_recruit_result_error_unknown_unit_type_detailed)
+{
+	const std::string& name = ai::actions::get_error_name(ai::recruit_result::E_UNKNOWN_OR_DUMMY_UNIT_TYPE);
+	BOOST_CHECK_EQUAL(name, "recruit_result::E_UNKNOWN_OR_DUMMY_UNIT_TYPE");
+}
+
+BOOST_AUTO_TEST_CASE(test_recruit_result_error_not_available_for_recruiting)
+{
+	const std::string& name = ai::actions::get_error_name(ai::recruit_result::E_NOT_AVAILABLE_FOR_RECRUITING);
+	BOOST_CHECK_EQUAL(name, "recruit_result::E_NOT_AVAILABLE_FOR_RECRUITING");
+}
+
+// ============================================================================
+// AI Stopunit Result Additional Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_stopunit_result_error_no_unit_detailed)
+{
+	const std::string& name = ai::actions::get_error_name(ai::stopunit_result::E_NO_UNIT);
+	BOOST_CHECK_EQUAL(name, "stopunit_result::E_NO_UNIT");
+}
+
+// ============================================================================
+// AI Game Info Extended Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_game_info_default_construction)
+{
+	ai::game_info info;
+
+	BOOST_CHECK(info.recent_attacks.empty());
+	BOOST_CHECK_EQUAL(info.recent_attacks.size(), 0u);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_game_info_multiple_attacks)
+{
+	ai::game_info info;
+
+	std::set<map_location> locations;
+	for(int i = 0; i < 10; ++i) {
+		map_location loc(i, i);
+		info.recent_attacks.insert(loc);
+		locations.insert(loc);
+	}
+
+	BOOST_CHECK_EQUAL(info.recent_attacks.size(), locations.size());
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_game_info_duplicate_attack_location)
+{
+	ai::game_info info;
+	map_location loc(5, 5);
+
+	info.recent_attacks.insert(loc);
+	info.recent_attacks.insert(loc);  // Duplicate
+
+	// set should only contain unique locations
+	BOOST_CHECK_EQUAL(info.recent_attacks.size(), 1u);
+}
+
+// ============================================================================
+// AI Description Extended Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_description_copy_construction)
+{
+	ai::description original;
+	original.id = "test_id";
+	original.text = t_string("Test Text");
+	original.mp_rank = 42;
+
+	ai::description copy = original;
+
+	BOOST_CHECK_EQUAL(copy.id, original.id);
+	BOOST_CHECK_EQUAL(copy.text.str(), original.text.str());
+	BOOST_CHECK_EQUAL(copy.mp_rank, original.mp_rank);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_description_assignment)
+{
+	ai::description desc1, desc2;
+	desc1.id = "id1";
+	desc1.mp_rank = 10;
+
+	desc2.id = "id2";
+	desc2.mp_rank = 20;
+
+	desc2 = desc1;
+
+	BOOST_CHECK_EQUAL(desc2.id, "id1");
+	BOOST_CHECK_EQUAL(desc2.mp_rank, 10);
+}
+
+// ============================================================================
+// AI Error Name Coverage Tests
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_error_name_all_attack_results)
+{
+	// Cover all attack result error codes
+	BOOST_CHECK(!ai::actions::get_error_name(ai::attack_result::E_EMPTY_ATTACKER).empty());
+	BOOST_CHECK(!ai::actions::get_error_name(ai::attack_result::E_EMPTY_DEFENDER).empty());
+	BOOST_CHECK(!ai::actions::get_error_name(ai::attack_result::E_INCAPACITATED_ATTACKER).empty());
+	BOOST_CHECK(!ai::actions::get_error_name(ai::attack_result::E_INCAPACITATED_DEFENDER).empty());
+	BOOST_CHECK(!ai::actions::get_error_name(ai::attack_result::E_NOT_OWN_ATTACKER).empty());
+	BOOST_CHECK(!ai::actions::get_error_name(ai::attack_result::E_NOT_ENEMY_DEFENDER).empty());
+	BOOST_CHECK(!ai::actions::get_error_name(ai::attack_result::E_NO_ATTACKS_LEFT).empty());
+	BOOST_CHECK(!ai::actions::get_error_name(ai::attack_result::E_WRONG_ATTACKER_WEAPON).empty());
+	BOOST_CHECK(!ai::actions::get_error_name(ai::attack_result::E_UNABLE_TO_CHOOSE_ATTACKER_WEAPON).empty());
+	BOOST_CHECK(!ai::actions::get_error_name(ai::attack_result::E_ATTACKER_AND_DEFENDER_NOT_ADJACENT).empty());
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_error_name_all_move_results)
+{
+	// Cover all move result error codes
+	BOOST_CHECK(!ai::actions::get_error_name(ai::move_result::E_EMPTY_MOVE).empty());
+	BOOST_CHECK(!ai::actions::get_error_name(ai::move_result::E_NO_UNIT).empty());
+	BOOST_CHECK(!ai::actions::get_error_name(ai::move_result::E_NOT_OWN_UNIT).empty());
+	BOOST_CHECK(!ai::actions::get_error_name(ai::move_result::E_INCAPACITATED_UNIT).empty());
+	BOOST_CHECK(!ai::actions::get_error_name(ai::move_result::E_AMBUSHED).empty());
+	BOOST_CHECK(!ai::actions::get_error_name(ai::move_result::E_FAILED_TELEPORT).empty());
+	BOOST_CHECK(!ai::actions::get_error_name(ai::move_result::E_OFF_MAP).empty());
+	BOOST_CHECK(!ai::actions::get_error_name(ai::move_result::E_NO_ROUTE).empty());
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_error_name_all_recall_results)
+{
+	// Cover all recall result error codes
+	BOOST_CHECK(!ai::actions::get_error_name(ai::recall_result::E_NOT_AVAILABLE_FOR_RECALLING).empty());
+	BOOST_CHECK(!ai::actions::get_error_name(ai::recall_result::E_NO_GOLD).empty());
+	BOOST_CHECK(!ai::actions::get_error_name(ai::recall_result::E_NO_LEADER).empty());
+	BOOST_CHECK(!ai::actions::get_error_name(ai::recall_result::E_LEADER_NOT_ON_KEEP).empty());
+	BOOST_CHECK(!ai::actions::get_error_name(ai::recall_result::E_BAD_RECALL_LOCATION).empty());
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_error_name_all_recruit_results)
+{
+	// Cover all recruit result error codes
+	BOOST_CHECK(!ai::actions::get_error_name(ai::recruit_result::E_NOT_AVAILABLE_FOR_RECRUITING).empty());
+	BOOST_CHECK(!ai::actions::get_error_name(ai::recruit_result::E_UNKNOWN_OR_DUMMY_UNIT_TYPE).empty());
+	BOOST_CHECK(!ai::actions::get_error_name(ai::recruit_result::E_NO_GOLD).empty());
+	BOOST_CHECK(!ai::actions::get_error_name(ai::recruit_result::E_NO_LEADER).empty());
+	BOOST_CHECK(!ai::actions::get_error_name(ai::recruit_result::E_LEADER_NOT_ON_KEEP).empty());
+	BOOST_CHECK(!ai::actions::get_error_name(ai::recruit_result::E_BAD_RECRUIT_LOCATION).empty());
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_error_name_all_stopunit_results)
+{
+	// Cover all stopunit result error codes
+	BOOST_CHECK(!ai::actions::get_error_name(ai::stopunit_result::E_NO_UNIT).empty());
+	BOOST_CHECK(!ai::actions::get_error_name(ai::stopunit_result::E_NOT_OWN_UNIT).empty());
+	BOOST_CHECK(!ai::actions::get_error_name(ai::stopunit_result::E_INCAPACITATED_UNIT).empty());
 }
 
 BOOST_AUTO_TEST_SUITE_END()
