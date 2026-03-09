@@ -174,16 +174,16 @@
 | AI 配置解析 | 90%+ | ✅ |
 | AI 数据结构 | 85%+ | ✅ |
 | AI 错误处理 | 95%+ | ✅ |
-| AI Manager | 70% | 🟢 |
-| AI Composite | 80% | 🟢 |
-| AI Context | 75% | 🟢 |
-| AI Default RCA | 65% | 🟡 |
-| AI Engine | 70% | 🟢 |
-| AI Stage | 75% | 🟢 |
-| AI Component | 80% | 🟢 |
-| AI Recruitment | 60% | 🟡 |
-| AI Lua | 40% | 🟡 |
-| 默认 AI 逻辑 | 50% | 🟡 |
+| AI Manager | 75% | 🟢 |
+| AI Composite | 85% | ✅ |
+| AI Context | 80% | 🟢 |
+| AI Default RCA | 70% | 🟢 |
+| AI Engine | 75% | 🟢 |
+| AI Stage | 80% | 🟢 |
+| AI Component | 85% | ✅ |
+| AI Recruitment | 65% | 🟡 |
+| AI Lua | 50% | 🟡 |
+| 默认 AI 逻辑 | 55% | 🟡 |
 
 **整体估算覆盖率：~80-85%**
 
