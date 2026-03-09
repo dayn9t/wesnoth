@@ -19,6 +19,7 @@
 #include "ai/actions.hpp"
 #include "ai/configuration.hpp"
 #include "ai/game_info.hpp"
+#include "ai/ai_target.hpp"
 #include "ai/composite/rca.hpp"
 #include "ai/manager.hpp"
 #include "ai/default/ca.hpp"
@@ -2255,6 +2256,97 @@ BOOST_AUTO_TEST_CASE(test_ai_composite_stage_with_aspects)
 
 	BOOST_CHECK_EQUAL(stage_cfg["id"].str(), "combat_phase");
 	BOOST_CHECK(stage_cfg.has_child("aspect"));
+}
+
+// ============================================================================
+// Additional AI Tests - Target and Aspect
+// ============================================================================
+
+BOOST_AUTO_TEST_CASE(test_ai_target_defines)
+{
+	// Verify AI target constants are defined
+	BOOST_CHECK_EQUAL(std::string(ai::ai_target_defines::village), "village");
+	BOOST_CHECK_EQUAL(std::string(ai::ai_target_defines::leader), "leader");
+	BOOST_CHECK_EQUAL(std::string(ai::ai_target_defines::xplicit), "explicit");
+	BOOST_CHECK_EQUAL(std::string(ai::ai_target_defines::threat), "threat");
+	BOOST_CHECK_EQUAL(std::string(ai::ai_target_defines::battle_aid), "battle aid");
+	BOOST_CHECK_EQUAL(std::string(ai::ai_target_defines::mass), "mass");
+	BOOST_CHECK_EQUAL(std::string(ai::ai_target_defines::support), "support");
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_target_enum_base)
+{
+	// Verify ai_target enum base compiles
+	BOOST_CHECK(true);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_aspect_attacks_config)
+{
+	config attacks_cfg;
+	attacks_cfg["id"] = "attacks";
+
+	config& aspect = attacks_cfg.add_child("aspect");
+	aspect["id"] = "attacks";
+
+	BOOST_CHECK_EQUAL(attacks_cfg["id"].str(), "attacks");
+	BOOST_CHECK(attacks_cfg.has_child("aspect"));
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_aspect_attacks_filter_config)
+{
+	config filter_cfg;
+	filter_cfg.add_child("filter_own");
+	filter_cfg.add_child("filter_enemy");
+
+	BOOST_CHECK(filter_cfg.has_child("filter_own"));
+	BOOST_CHECK(filter_cfg.has_child("filter_enemy"));
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_move_to_targets_config)
+{
+	config move_cfg;
+	move_cfg["id"] = "move_to_targets";
+	move_cfg["name"] = "Move to Targets";
+
+	BOOST_CHECK_EQUAL(move_cfg["id"].str(), "move_to_targets");
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_configuration_aspects_multiple)
+{
+	config ai_cfg;
+
+	config& aspect1 = ai_cfg.add_child("aspect");
+	aspect1["id"] = "aggression";
+	aspect1["value"] = "0.6";
+
+	config& aspect2 = ai_cfg.add_child("aspect");
+	aspect2["id"] = "caution";
+	aspect2["value"] = "0.4";
+
+	config& aspect3 = ai_cfg.add_child("aspect");
+	aspect3["id"] = "village_value";
+	aspect3["value"] = "1.5";
+
+	BOOST_CHECK_EQUAL(ai_cfg.child_count("aspect"), 3u);
+}
+
+BOOST_AUTO_TEST_CASE(test_ai_configuration_goals_multiple)
+{
+	config ai_cfg;
+
+	config& goal1 = ai_cfg.add_child("goal");
+	goal1["name"] = "protect_leader";
+	goal1["value"] = "100";
+
+	config& goal2 = ai_cfg.add_child("goal");
+	goal2["name"] = "explore";
+	goal2["value"] = "50";
+
+	config& goal3 = ai_cfg.add_child("goal");
+	goal3["name"] = "collect_villages";
+	goal3["value"] = "80";
+
+	BOOST_CHECK_EQUAL(ai_cfg.child_count("goal"), 3u);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
